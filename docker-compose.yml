@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: my_ubuntu_container
+    ports:
+      - "5432:5432"  # PostgreSQL
+      - "3000:3000"  # Node.js app
+      - "8000:8000"  # Python/Django app
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
