@@ -1,14 +1,17 @@
-version: '3.8'
-
 services:
   app:
     build: .
     container_name: my_ubuntu_container
     ports:
       - "5432:5432"  # PostgreSQL
-      - "3000:3000"  # Node.js app
-      - "8000:8000"  # Python/Django app
+      - "8080:8080"  # VS Code Server
+      - "3000:3000"  # Next.js app
+      - "9000:9000"  # Python/Django app
     volumes:
-      - .:/app
+      - .:/home/devuser/app  # Mapping current directory to container's app folder
+    environment:
+      - PASSWORD=password123  # Make sure to change this with a secure password
     stdin_open: true
     tty: true
+    command: /bin/bash -c "/home/devuser/install-extensions.sh && code-server --bind-addr 0.0.0.0:8080 --auth password"
+
